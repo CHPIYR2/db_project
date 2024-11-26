@@ -42,14 +42,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #d5c9e1; /* 背景顏色類似於附圖 */
-  padding: 10px 20px;
+  background-color: #5b2d8a9a; /* 背景顏色類似於附圖 */
+  padding: 3px 20px;
   border-bottom: 1px solid black; /* 底部邊框 */
 }
 
 .header-title a {
   font-size: 1.5rem;
-  color: black;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   font-weight: bold;
 }
@@ -61,13 +61,15 @@
 
 .header-links {
   display: flex;
+  align-items: center; /* 垂直置中 */
   gap: 15px;
 }
 
 .header-links a {
-  color: black;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   font-size: 1.5rem;
+  margin-left: 20px;
 }
 
 .header-links a:hover {
@@ -81,6 +83,8 @@
   align-items: center;
   height: 100vh;
   background-color: #f0f2f5; /* 背景顏色 */
+  padding: 0 20px; /* 增加 padding 以確保表單在較小屏幕上有合理的間距 */
+  box-sizing: border-box; /* 確保容器內邊距包含在寬度計算內 */
 }
 
 .signup-form {
@@ -90,6 +94,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
+  margin: 0 auto; /* 讓表單在容器中水平居中 */
+  box-sizing: border-box; /* 確保 padding 不影響表單的總寬度 */
 }
 
 .signup-title {
@@ -97,6 +103,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   color: #000;
+  text-align: center; /* 讓標題居中顯示 */
 }
 
 .signup-input {
@@ -106,6 +113,7 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   background-color: #f4f8ff; /* 輸入框背景顏色 */
+  box-sizing: border-box; /* 確保 padding 不影響輸入框的寬度 */
 }
 
 .signup-button {
@@ -114,14 +122,15 @@
   margin-top: 20px;
   border: none;
   border-radius: 50px;
-  background-color: #4285f4; /* 藍色按鈕 */
+  background-color: #977bb3;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s; /* 增加按鈕變化的過渡效果 */
 }
 
 .signup-button:hover {
-  background-color: #357ae8; /* 按鈕懸停效果 */
+  background-color: #9bbef7; /* 按鈕懸停效果 */
 }
 
 .signin-link {
@@ -131,10 +140,43 @@
 }
 
 .signin-link a {
-  color: #4285f4;
+  color: #d5c9e1;
   text-decoration: none;
 }
 
 .signin-link a:hover {
   text-decoration: underline;
+}
+
+.text-input {
+  width: 98%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  background-color: #ffffff3a; /* 輸入框背景顏色 */
+  color: #000000; /* 設定輸入框內文字顏色 */
+}
+
+.text-input::placeholder {
+  color: #ffffffb0; /* 設定 placeholder 文字顏色 */
+  opacity: 1; /* 可選，確保顏色顯示正常，默認 opacity 可能較低 */
+}
+
+/* Home Page */
+.schedule-button {
+  width: 50%;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: #977bb3;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s; /* 增加按鈕變化的過渡效果 */
+}
+
+.schedule-button:hover {
+  background-color: #9bbef7; /* 按鈕懸停效果 */
 }

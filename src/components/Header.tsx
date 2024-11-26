@@ -1,17 +1,19 @@
 // Header.js
 import React from 'react';
 import '../App.css';
+import SearchBar from "../components/home/searchBar";
 
 const Header = () => {
   return (
     <div className="header">
       <div className="header-title">
         <a href="/">
-        <span className="app-name">Tickify</span> 快速訂票
+        Tickify 快速訂票
         </a>
       </div>
       <div className="header-links">
-        <a href="/signup">Sign up</a>
+        <SearchBar />
+        <a href="/signup">註冊</a>
       </div>
     </div>
   );

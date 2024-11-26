@@ -1,13 +1,12 @@
 "use client"; // 標記為客戶端組件
 
 import React from 'react';
-import SignUpForm from '../../../components/auth/signup/signupForm.tsx'; // 引入表單組件
+import SignUpForm from '../../../components/auth/signup/signupForm'; // 刪除 .tsx 擴展名
 
 const SignupPage = () => {
     return (
-        <div className="flex flex-col items-center justify-center  h-full w-full min-h-[80vh]">
-
-            <SignUpForm /> {/* 調用表單組件 */}
+        <div>
+            <SignUpForm />
         </div>
     );
 };
