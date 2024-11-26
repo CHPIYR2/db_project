@@ -36,3 +36,105 @@
     transform: rotate(360deg);
   }
 }
+
+/* Header.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d5c9e1; /* 背景顏色類似於附圖 */
+  padding: 10px 20px;
+  border-bottom: 1px solid black; /* 底部邊框 */
+}
+
+.header-title a {
+  font-size: 1.5rem;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.app-name {
+  color: #000; /* 可以調整顏色以符合品牌標識 */
+  text-decoration: none;
+}
+
+.header-links {
+  display: flex;
+  gap: 15px;
+}
+
+.header-links a {
+  color: black;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.header-links a:hover {
+  text-decoration: underline;
+}
+
+/* SignUp.css */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5; /* 背景顏色 */
+}
+
+.signup-form {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.signup-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.signup-input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f4f8ff; /* 輸入框背景顏色 */
+}
+
+.signup-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: #4285f4; /* 藍色按鈕 */
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.signup-button:hover {
+  background-color: #357ae8; /* 按鈕懸停效果 */
+}
+
+.signin-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+}
+
+.signin-link a {
+  color: #4285f4;
+  text-decoration: none;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
