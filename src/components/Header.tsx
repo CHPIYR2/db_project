@@ -1,7 +1,7 @@
 // Header.js
 import React from 'react';
 import '../App.css';
-import SearchBar from "../components/home/searchBar";
+import SearchBar from "../components/home/searchBar.tsx";
 
 const Header = () => {
   return (
