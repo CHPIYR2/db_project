@@ -14,7 +14,12 @@ This is the final project for the Database Introduction course. It involves deve
         node -v
         npm -v
         ```
-        
+
+2. **Install react-scripts:**
+    ```jsx
+    npm install react-scripts
+    ```
+              
 2. **Create React App (first time):**
     
     ```jsx
