@@ -4,9 +4,9 @@ import '../../../App.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
-    email: ''
+
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +25,12 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
-        <h1 className="signup-title">註冊</h1>
+        <h1 className="signup-title">登入</h1>
         <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
           className="signup-input"
         />
@@ -42,19 +42,11 @@ const SignUp = () => {
           onChange={handleChange}
           className="signup-input"
         />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="signup-input"
-        />
         <button type="submit" className="signup-button">
           下一步 →
         </button>
         <div className="signin-link">
-          已有帳號？ <a href="/signin">登入</a>
+          沒有帳號？ <a href="/signup">註冊</a>
         </div>
       </form>
     </div>
