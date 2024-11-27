@@ -209,9 +209,9 @@
 
 /* Home Page */
 .schedule-button {
-  width: 50%;
+  width: 70%;
   padding: 15px;
-  margin-top: 20px;
+  margin-top: 70px;
   border: none;
   border-radius: 50px;
   background-color: #977bb3;
@@ -219,8 +219,127 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s; /* 增加按鈕變化的過渡效果 */
+  text-decoration: none;
+  text-align: center;
 }
 
 .schedule-button:hover {
   background-color: #9bbef7; /* 按鈕懸停效果 */
+}
+
+/* seat select */
+.container {
+  width: 50%;
+  margin: 70px auto;
+  text-align: center;
+}
+.event-selection-container {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.event-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+.seat-selection-container {
+  text-align: left;
+}
+.align-left {
+  text-align: left;
+}
+.seat-selector-fixed-container {
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  overflow: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 20px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+.seat-selector-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.seat-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: fit-content;
+}
+.seat-row {
+  display: flex;
+  justify-content: flex-start;
+  min-width: fit-content;
+}
+.seat {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seat.empty {
+  background-color: #fff;
+}
+.seat.occupied {
+  background-color: #6c757d;
+  color: #fff;
+  cursor: not-allowed;
+}
+.seat.selected {
+  background-color: #28a745;
+  color: #fff;
+}
+.btn-container {
+  margin-top: 20px;
+}
+.selected-seats-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.selected-seat {
+  background-color: #f1f1f1;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.submit-order-container {
+  margin-top: 20px;
+  margin-right: -22px;
+  text-align: right;
+}
+.submit-order-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.submit-order-button:hover {
+  background-color: #0056b3;
+}
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
 }

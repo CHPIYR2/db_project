@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 // 定義資料類型
@@ -108,9 +109,9 @@ function MainPage() {
                 <p>地點: {event.location}</p>
                 <p>尚有座位: {event.seats}</p>
               </div>
-              <button className="schedule-button">
+              <Link to="/SeatSelection" className="schedule-button">
                 Get
-              </button>
+              </Link>
             </div>
           ))}
         </div>
