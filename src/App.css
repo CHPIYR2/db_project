@@ -72,8 +72,52 @@
   margin-left: 20px;
 }
 
-.header-links a:hover {
-  text-decoration: underline;
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-title {
+  cursor: pointer;
+  padding: 12px 24px;
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 120px; /* 加大選單寬度以避免擁擠 */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  left: 50%; /* 選單的左側設置在父元素寬度的一半 */
+  transform: translateX(-50%); /* 將選單往左平移自身寬度的一半，達到居中的效果 */
+  margin-top: 10px; /* 增加與 "會員專區" 的上下距離 */
+  border-radius: 8px; /* 增加圓角，使選單看起來更美觀 */
+}
+
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 12px;
+  text-decoration: none;
+  display: block;
+  width: 46%;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 /* SignUp.css */
@@ -140,7 +184,7 @@
 }
 
 .signin-link a {
-  color: #d5c9e1;
+  color: rgb(119, 84, 153);
   text-decoration: none;
 }
 
@@ -149,7 +193,7 @@
 }
 
 .text-input {
-  width: 98%;
+  width: 90%;
   padding: 12px;
   margin: 10px 0;
   border-radius: 5px;

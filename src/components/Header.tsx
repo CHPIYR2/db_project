@@ -8,12 +8,18 @@ const Header = () => {
     <div className="header">
       <div className="header-title">
         <a href="/">
-        Tickify 快速訂票
+          Tickify 快速訂票
         </a>
       </div>
       <div className="header-links">
         <SearchBar />
-        <a href="/signup">註冊</a>
+        <div className="dropdown">
+          <span className="dropdown-title">會員專區</span>
+          <div className="dropdown-content">
+            <a href="/signin">登入</a>
+            <a href="/signup">註冊</a>
+          </div>
+        </div>
       </div>
     </div>
   );
