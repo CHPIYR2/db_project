@@ -25,7 +25,7 @@ const SignIn = () => {
       console.log('登入成功:', response.data);
 
       // 儲存登入 token 到 localStorage
-      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('authToken', response.data.userId);
 
       // 顯示提示字樣
       const successMessage = document.createElement('div');
