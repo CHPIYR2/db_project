@@ -94,26 +94,31 @@
   display: none;
   position: absolute;
   background-color: white;
-  min-width: 120px; /* 加大選單寬度以避免擁擠 */
+  min-width: 154px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  left: 50%; /* 選單的左側設置在父元素寬度的一半 */
-  transform: translateX(-50%); /* 將選單往左平移自身寬度的一半，達到居中的效果 */
-  margin-top: 10px; /* 增加與 "會員專區" 的上下距離 */
-  border-radius: 8px; /* 增加圓角，使選單看起來更美觀 */
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 0; /* 確保內容沒有多餘的 padding */
+  left: 54%;
+  margin-top: 14px;
 }
-
 
 .dropdown-content a {
   color: black;
-  padding: 12px 12px;
+  padding: 12px 12px; /* 確保上下有間距，但左右貼近容器 */
   text-decoration: none;
   display: block;
-  width: 46%;
+  width: 100%; /* 填滿父容器的寬度 */
+  box-sizing: border-box; /* 確保 padding 計算在 width 內 */
+  margin: 0; /* 確保沒有不必要的 margin */
 }
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
+  border-radius: 8px;
 }
 
 .dropdown:hover .dropdown-content {
