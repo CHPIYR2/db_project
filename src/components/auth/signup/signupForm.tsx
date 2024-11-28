@@ -1,31 +1,63 @@
 // SignUp.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../../App.css';
+import axios from 'axios';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    email: ''
+    phone: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('註冊資料:', formData);
-    // 此處可以添加表單提交邏輯，例如 API 調用
+    setError('');
+    try {
+      const response = await axios.post('http://localhost:5000/api/signup', formData);
+      setSuccess(response.data.message);
+      setError('');
+      
+      // 顯示提示字樣
+      const successMessage = document.createElement('div');
+      successMessage.innerText = '註冊成功';
+      successMessage.style.position = 'fixed';
+      successMessage.style.bottom = '20px';
+      successMessage.style.right = '20px';
+      successMessage.style.backgroundColor = 'green';
+      successMessage.style.color = 'white';
+      successMessage.style.padding = '10px';
+      successMessage.style.borderRadius = '5px';
+      document.body.appendChild(successMessage);
+
+      // 3秒後移除提示字樣並跳轉回首頁
+      setTimeout(() => {
+        document.body.removeChild(successMessage);
+        window.location.href = '/signin'; // 跳轉回首頁
+      }, 1000);
+    } catch (err) {
+      setError(err.response?.data?.message || '註冊失敗，請再試一次');
+      setSuccess('');
+    }
   };
 
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h1 className="signup-title">註冊</h1>
+        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         <input
           type="text"
           name="username"
@@ -43,10 +75,10 @@ const SignUp = () => {
           className="signup-input"
         />
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
+          type="phone"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
           onChange={handleChange}
           className="signup-input"
         />
