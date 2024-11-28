@@ -1,4 +1,4 @@
-# **DB Project Frontend**
+# **DB Project**
 
 ## **Overview**
 
