@@ -16,11 +16,22 @@ const SeatSelection = () => {
   const [columns, setColumns] = useState<number>(initialColumns);
   const [seats, setSeats] = useState<Seat[][]>(generateInitialSeats(initialRows, initialColumns));
   const [selectedEvent, setSelectedEvent] = useState<string>('');
+  const [selectedArea, setSelectedArea] = useState<string>('');
 
   const events = [
     { id: 'event1', name: '音樂會' },
     { id: 'event2', name: '戲劇表演' },
     { id: 'event3', name: '喜劇秀' }
+  ];
+
+  const areas = [
+    { id: 'A', name: 'A 區' },
+    { id: 'B', name: 'B 區' },
+    { id: 'C', name: 'C 區' },
+    { id: 'D', name: 'D 區' },
+    { id: 'E', name: 'E 區' },
+    { id: 'F', name: 'F 區' },
+    { id: 'G', name: 'G 區' },
   ];
 
   useEffect(() => {
@@ -65,6 +76,19 @@ const SeatSelection = () => {
           <option value="" disabled>請選擇活動</option>
           {events.map(event => (
             <option key={event.id} value={event.id}>{event.name}</option>
+          ))}
+        </select>
+      </div>
+      <div className="event-selection-container">
+        <h2 className="align-left">區域選擇</h2>
+        <select
+          value={selectedArea}
+          onChange={(e) => setSelectedArea(e.target.value)}
+          className="event-select"
+        >
+          <option value="" disabled>請選擇區域</option>
+          {areas.map(areas => (
+            <option key={areas.id} value={areas.id}>{areas.name}</option>
           ))}
         </select>
       </div>
