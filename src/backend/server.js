@@ -7,11 +7,11 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-app.use(cors({
-    origin: [process.env.APT_SERVER, 'http://localhost:3000']
-  }));
-
 require('dotenv').config();  // 讀取 .env 文件中的變數
+
+app.use(cors({
+    origin: [process.env.API_SERVER, 'http://localhost:3000']
+  }));
 
 const dbConfig = {
     user: process.env.DB_USER,               // 從環境變數中讀取資料庫使用者名稱
