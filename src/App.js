@@ -4,7 +4,7 @@ import Headers from './components/Header.tsx'
 import Home from './pages/Home.tsx';
 import Signup from './pages/auth/signup/Page.tsx';
 import Signin from './pages/auth/signin/Page.tsx';
-import SeatSelection from './pages/ticket/SeatSelection.tsx';
+import SeatSelection from './pages/ticket/[activity_id]/SeatSelection.tsx';
 import Order from './pages/order/Order.tsx';
 
 const router = createBrowserRouter([
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <Signin />,
   },
   {
-    path: "/SeatSelection",
+    path: "/SeatSelection/:activity_id", // 將動態參數改為 :activity_id
     element: <SeatSelection />,
   },
   {
