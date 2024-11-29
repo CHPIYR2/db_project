@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../App.css';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 interface Seat {
   row: number;
   column: number;
@@ -8,35 +10,78 @@ interface Seat {
   occupied: boolean;
 }
 
+interface Activity {
+  activity_id: number;
+  activity_name: string;
+  place: string;
+  artist: string;
+  activity_date: string;
+}
+
 const SeatSelection = () => {
-  const initialRows = 5;
-  const initialColumns = 50;
+  const initialRows = 0;
+  const initialColumns = 0;
 
   const [rows, setRows] = useState<number>(initialRows);
   const [columns, setColumns] = useState<number>(initialColumns);
   const [seats, setSeats] = useState<Seat[][]>(generateInitialSeats(initialRows, initialColumns));
   const [selectedEvent, setSelectedEvent] = useState<string>('');
   const [selectedArea, setSelectedArea] = useState<string>('');
-
-  const events = [
-    { id: 'event1', name: '音樂會' },
-    { id: 'event2', name: '戲劇表演' },
-    { id: 'event3', name: '喜劇秀' }
-  ];
-
-  const areas = [
-    { id: 'A', name: 'A 區' },
-    { id: 'B', name: 'B 區' },
-    { id: 'C', name: 'C 區' },
-    { id: 'D', name: 'D 區' },
-    { id: 'E', name: 'E 區' },
-    { id: 'F', name: 'F 區' },
-    { id: 'G', name: 'G 區' },
-  ];
+  const [activities, setActivities] = useState<Activity[]>([]); //{ activity_id: 2, activity_name: 'B組預賽 韓國vs中華', place: '臺北大巨蛋', artist: '世界12強棒球賽', activity_date: '2024-11-13' }
+  const [areas, setAreas] = useState([
+    { area_id: 1, place: '臺北大巨蛋', area: 'A', area_row: '27', area_column: '54' }
+  ]); //{ area_id: 1, place: '臺北大巨蛋', area: 'A', area_row: '27', area_column: '54' }
 
   useEffect(() => {
-    setSeats(generateInitialSeats(rows, columns));
-  }, [rows, columns]);
+    fetchActivities();
+    if (selectedEvent) {
+      fetchAreas();
+    }
+  }, [selectedEvent, activities]);
+
+  useEffect(() => {
+    // 當選擇的區域改變時更新行數和列數
+    if (selectedArea) {
+      const area = areas.find((a) => a.area_id === parseInt(selectedArea));
+      if (area) {
+        const updatedRows = parseInt(area.area_row);
+        const updatedColumns = parseInt(area.area_column);
+        setRows(updatedRows);
+        setColumns(updatedColumns);
+        setSeats(generateInitialSeats(updatedRows, updatedColumns));
+      }
+    }
+  }, [selectedArea]);
+
+  const fetchActivities = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/activities`);
+      if (response.ok) {
+        const data = await response.json();
+        setActivities(data);
+      } else {
+        console.error('Failed to fetch activities');
+      }
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    }
+  };
+
+  const fetchAreas = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/area`);
+      if (response.ok) {
+        const data = await response.json();
+        // 過濾符合選擇活動的 place 的區域
+        const filteredAreas = data.filter((area) => area.place === activities.find(event => event.activity_id === parseInt(selectedEvent))?.place);
+        setAreas(filteredAreas); // 使用 API 資料取代範例資料
+      } else {
+        console.error('Failed to fetch areas');
+      }
+    } catch (error) {
+      console.error('Error fetching areas:', error);
+    }
+  };
 
   function generateInitialSeats(rows: number, columns: number): Seat[][] {
     const seats: Seat[][] = [];
@@ -64,18 +109,72 @@ const SeatSelection = () => {
     });
   };
 
+  const postTicketData = async (seatData: { activity_id: number; seat: string; user_id: string | null }) => {
+    try {
+      const response = await fetch(`${apiUrl}/tickets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(seatData)
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('票券新增成功:', data);
+
+        // 顯示提示字樣
+        const successMessage = document.createElement('div');
+        successMessage.innerText = '票券訂購成功';
+        successMessage.style.position = 'fixed';
+        successMessage.style.bottom = '20px';
+        successMessage.style.right = '20px';
+        successMessage.style.backgroundColor = 'green';
+        successMessage.style.color = 'white';
+        successMessage.style.padding = '10px';
+        successMessage.style.borderRadius = '5px';
+        document.body.appendChild(successMessage);
+
+        // 跳轉至首頁
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+      } else {
+        console.error('新增票券失敗');
+      }
+    } catch (error) {
+      console.error('新增票券失敗:', error);
+    }
+  };
+
+  const handleSubmitOrder = async () => {
+    const userId = localStorage.getItem('authToken');
+    const selectedSeats = seats.flat().filter(seat => seat.selected);
+    const selectedAreaObject = areas.find(area => area.area_id === parseInt(selectedArea));
+    selectedSeats.forEach(async seat => {
+      const seatData = {
+        activity_id: parseInt(selectedEvent),
+        seat: `${selectedAreaObject?.area}-${seat.row}-${seat.column}`,
+        user_id: userId
+      };
+      console.log(seatData);
+      await postTicketData(seatData);
+    });
+  };
+
   return (
     <div className="container">
       <div className="event-selection-container">
         <h2 className="align-left">活動選擇</h2>
         <select
           value={selectedEvent}
-          onChange={(e) => setSelectedEvent(e.target.value)}
+          onChange={(e) => {
+            setSelectedEvent(e.target.value); // 更新選擇的活動
+          }}
           className="event-select"
         >
           <option value="" disabled>請選擇活動</option>
-          {events.map(event => (
-            <option key={event.id} value={event.id}>{event.name}</option>
+          {activities.map(event => (
+            <option key={event.activity_id} value={event.activity_id}>{event.artist + " - " + event.activity_name}</option>
           ))}
         </select>
       </div>
@@ -85,10 +184,13 @@ const SeatSelection = () => {
           value={selectedArea}
           onChange={(e) => setSelectedArea(e.target.value)}
           className="event-select"
+          disabled={!selectedEvent} // 當未選擇活動時禁用
         >
           <option value="" disabled>請選擇區域</option>
-          {areas.map(areas => (
-            <option key={areas.id} value={areas.id}>{areas.name}</option>
+          {areas.map(area => (
+            <option key={area.area_id} value={area.area_id}>
+              {`${area.place} - ${area.area} 區`}
+            </option>
           ))}
         </select>
       </div>
@@ -124,7 +226,7 @@ const SeatSelection = () => {
           </div>
         </div>
         <div className="submit-order-container">
-          <button className="submit-order-button">送出訂單</button>
+          <button className="submit-order-button" onClick={handleSubmitOrder}>送出訂單</button>
         </div>
       </div>
     </div>

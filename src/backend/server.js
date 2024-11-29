@@ -87,6 +87,33 @@ app.post('/api/signup', async (req, res) => {
     }
   });
 
+// 新增票券的 API
+app.post('/api/tickets', async (req, res) => {
+  const { activity_id, seat, user_id } = req.body;
+
+  // 驗證請求的必要資料
+  if (!activity_id || !seat || !user_id) {
+      return res.status(400).json({ message: '請提供活動 ID、座位資訊和使用者 ID' });
+  }
+
+  try {
+      // 插入新的票券資料到 ticket 表中
+      const result = await sql.query`
+          INSERT INTO ticket (activity_id, seat, user_id) 
+          VALUES (${activity_id}, ${seat}, ${user_id});
+          SELECT SCOPE_IDENTITY() AS ticket_id;`;
+
+      // 返回新增的票券 ID
+      return res.status(201).json({ 
+          message: '票券新增成功', 
+          ticket_id: result.recordset[0]?.ticket_id || null 
+      });
+  } catch (err) {
+      console.error('新增票券失敗:', err);
+      res.status(500).json({ message: '伺服器錯誤' });
+  }
+});
+
 // 獲取所有票券的 API
 app.get('/api/tickets', async (req, res) => {
   try {
@@ -113,6 +140,17 @@ app.get('/api/users', async (req, res) => {
 app.get('/api/activities', async (req, res) => {
   try {
     const result = await sql.query('SELECT * FROM activity');
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('獲取活動失敗:', err);
+    res.status(500).send('伺服器錯誤');
+  }
+});
+
+// 獲取所有活動的 API
+app.get('/api/area', async (req, res) => {
+  try {
+    const result = await sql.query('SELECT * FROM area');
     res.json(result.recordset);
   } catch (err) {
     console.error('獲取活動失敗:', err);

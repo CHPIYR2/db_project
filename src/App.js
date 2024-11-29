@@ -5,6 +5,7 @@ import Home from './pages/Home.tsx';
 import Signup from './pages/auth/signup/Page.tsx';
 import Signin from './pages/auth/signin/Page.tsx';
 import SeatSelection from './pages/ticket/SeatSelection.tsx';
+import Order from './pages/order/Order.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/SeatSelection",
     element: <SeatSelection />,
+  },
+  {
+    path: "/Order",
+    element: <Order />,
   }
 ]);
 

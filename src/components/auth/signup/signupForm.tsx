@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import '../../../App.css';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -26,7 +28,7 @@ const SignUp = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/api/signup', formData);
+      const response = await axios.post(`${apiUrl}/signup`, formData);
       setSuccess(response.data.message);
       setError('');
       

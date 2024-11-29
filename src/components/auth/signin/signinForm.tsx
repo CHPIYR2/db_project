@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../../../App.css';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const SignIn = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -21,11 +23,11 @@ const SignIn = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/api/signin', formData);
+      const response = await axios.post(`${apiUrl}/signin`, formData);
       console.log('登入成功:', response.data);
 
       // 儲存登入 token 到 localStorage
-      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('authToken', response.data.userId);
 
       // 顯示提示字樣
       const successMessage = document.createElement('div');
