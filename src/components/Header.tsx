@@ -39,7 +39,7 @@ const Header = () => {
               <a href="/signin">登入</a>
             )}
             {isLoggedIn ? (
-              <a href="/">訂單查詢</a>
+              <a href="/order">訂單查詢</a>
             ) : (
               <a href="/signup">註冊</a>
             )}
