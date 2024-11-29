@@ -44,12 +44,12 @@
   align-items: center;
   background-color: #5b2d8a9a; /* 背景顏色類似於附圖 */
   padding: 3px 20px;
-  border-bottom: 1px solid black; /* 底部邊框 */
+  border-bottom: 1px solid #8464a58a; /* 底部邊框 */
 }
 
 .header-title a {
   font-size: 1.5rem;
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
 }
@@ -242,11 +242,19 @@
   margin-bottom: 20px;
   text-align: left;
 }
+.event-disabled-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 0px solid #ccc;
+  margin-top: 10px;
+  color: #000000;
+}
 .event-select {
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #7a7a7a;
   margin-top: 10px;
+  color: #000000;
 }
 .seat-selection-container {
   text-align: left;
@@ -347,4 +355,33 @@ button {
 }
 button:hover {
   background-color: #0056b3;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* 黑色背景，50%透明度 */
+  color: white; /* 白色文字 */
+  border: none; /* 移除邊框 */
+  padding: 10px; /* 增加內距 */
+  cursor: pointer; /* 指針形狀鼠標 */
+  opacity: 0.8; /* 整個按鈕透明度 */
+  z-index: 2; /* 保證按鈕在圖片之上 */
+  transition: opacity 0.3s ease; /* 增加過渡效果 */
+}
+
+/* 懸停時更改透明度 */
+.carousel-button:hover {
+  opacity: 1; /* 懸停時透明度變成 100% */
+}
+
+/* 左側按鈕的位置 */
+.left-button {
+  left: 10px; /* 距離左邊界 10px */
+}
+
+/* 右側按鈕的位置 */
+.right-button {
+  right: 10px; /* 距離右邊界 10px */
 }
