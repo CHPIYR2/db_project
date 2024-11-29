@@ -114,6 +114,28 @@ app.post('/api/tickets', async (req, res) => {
   }
 });
 
+// 查詢某個 user_id 擁有的票券 API
+app.get('/api/tickets/:user_id', async (req, res) => {
+  const userId = req.params.user_id;
+
+  try {
+    const result = await sql.query`
+      SELECT t.ticket_id, CONCAT(a.artist, ' - ', a.activity_name) AS activity, a.activity_date, a.place, t.seat
+      FROM ticket t
+      JOIN activity a ON t.activity_id = a.activity_id
+      WHERE t.user_id = ${userId}`;
+    
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: '找不到此使用者的票券' });
+    }
+
+    return res.status(200).json(result.recordset);
+  } catch (err) {
+    console.error('伺服器錯誤:', err);
+    res.status(500).json({ message: '伺服器錯誤' });
+  }
+});
+
 // 獲取所有票券的 API
 app.get('/api/tickets', async (req, res) => {
   try {
