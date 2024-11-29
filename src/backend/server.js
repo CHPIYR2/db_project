@@ -10,7 +10,7 @@ const port = 5000;
 require('dotenv').config();  // 讀取 .env 文件中的變數
 
 app.use(cors({
-    origin: [process.env.APT_SERVER, 'http://localhost:3000']
+    origin: [process.env.API_SERVER, 'http://localhost:3000']
   }));
 
 const dbConfig = {
