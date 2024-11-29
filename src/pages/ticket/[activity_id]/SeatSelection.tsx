@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../../App.css';
+import { useParams } from 'react-router-dom'; // 引入 useParams
+import '../../../App.css';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -21,11 +22,12 @@ interface Activity {
 const SeatSelection = () => {
   const initialRows = 0;
   const initialColumns = 0;
+  const { activity_id } = useParams(); // 獲取動態路徑參數 activity_id
 
   const [rows, setRows] = useState<number>(initialRows);
   const [columns, setColumns] = useState<number>(initialColumns);
   const [seats, setSeats] = useState<Seat[][]>(generateInitialSeats(initialRows, initialColumns));
-  const [selectedEvent, setSelectedEvent] = useState<string>('');
+  const [selectedActivity, setselectedActivity] = useState<string>('');
   const [selectedArea, setSelectedArea] = useState<string>('');
   const [activities, setActivities] = useState<Activity[]>([]); //{ activity_id: 2, activity_name: 'B組預賽 韓國vs中華', place: '臺北大巨蛋', artist: '世界12強棒球賽', activity_date: '2024-11-13' }
   const [areas, setAreas] = useState([
@@ -34,10 +36,10 @@ const SeatSelection = () => {
 
   useEffect(() => {
     fetchActivities();
-    if (selectedEvent) {
+    if (selectedActivity) {
       fetchAreas();
     }
-  }, [selectedEvent, activities]);
+  }, [selectedActivity, activities]);
 
   useEffect(() => {
     // 當選擇的區域改變時更新行數和列數
@@ -59,6 +61,11 @@ const SeatSelection = () => {
       if (response.ok) {
         const data = await response.json();
         setActivities(data);
+        // 自動選擇 activity_id 為 { activity_id } 的活動
+        const activityToSelect = data.find(event => event.activity_id === parseInt(activity_id || '0'));
+        if (activityToSelect) {
+          setselectedActivity(activityToSelect.activity_id.toString());
+        }
       } else {
         console.error('Failed to fetch activities');
       }
@@ -73,7 +80,7 @@ const SeatSelection = () => {
       if (response.ok) {
         const data = await response.json();
         // 過濾符合選擇活動的 place 的區域
-        const filteredAreas = data.filter((area) => area.place === activities.find(event => event.activity_id === parseInt(selectedEvent))?.place);
+        const filteredAreas = data.filter((area) => area.place === activities.find(event => event.activity_id === parseInt(selectedActivity))?.place);
         setAreas(filteredAreas); // 使用 API 資料取代範例資料
       } else {
         console.error('Failed to fetch areas');
@@ -152,7 +159,7 @@ const SeatSelection = () => {
     const selectedAreaObject = areas.find(area => area.area_id === parseInt(selectedArea));
     selectedSeats.forEach(async seat => {
       const seatData = {
-        activity_id: parseInt(selectedEvent),
+        activity_id: parseInt(selectedActivity),
         seat: `${selectedAreaObject?.area}-${seat.row}-${seat.column}`,
         user_id: userId
       };
@@ -166,11 +173,12 @@ const SeatSelection = () => {
       <div className="event-selection-container">
         <h2 className="align-left">活動選擇</h2>
         <select
-          value={selectedEvent}
+          value={selectedActivity}
           onChange={(e) => {
-            setSelectedEvent(e.target.value); // 更新選擇的活動
+            setselectedActivity(e.target.value); // 更新選擇的活動
           }}
-          className="event-select"
+          className="event-disabled-select"
+          disabled // 禁用選擇活動
         >
           <option value="" disabled>請選擇活動</option>
           {activities.map(event => (
@@ -184,7 +192,7 @@ const SeatSelection = () => {
           value={selectedArea}
           onChange={(e) => setSelectedArea(e.target.value)}
           className="event-select"
-          disabled={!selectedEvent} // 當未選擇活動時禁用
+          disabled={!selectedActivity} // 當未選擇活動時禁用
         >
           <option value="" disabled>請選擇區域</option>
           {areas.map(area => (
