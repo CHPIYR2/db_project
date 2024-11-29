@@ -8,7 +8,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: [process.env.APT_SERVER, 'http://localhost:3000']
   }));
 
 require('dotenv').config();  // 讀取 .env 文件中的變數
