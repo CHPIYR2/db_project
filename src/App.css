@@ -214,7 +214,7 @@
 
 /* Home Page */
 .schedule-button {
-  width: 30%;
+  width: 50%;
   padding: 15px;
   margin-top: 70px;
   border: none;
@@ -226,6 +226,7 @@
   transition: background-color 0.3s; /* 增加按鈕變化的過渡效果 */
   text-decoration: none;
   text-align: center;
+  display: inline-block;
 }
 
 .schedule-button:hover {
