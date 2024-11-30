@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 // 定義型別
 interface Singer {
   name: string;
@@ -8,6 +10,7 @@ interface Singer {
 }
 
 interface EventSchedule {
+  id: number;
   name: string;
   image: string;
   time: string;
@@ -211,7 +214,7 @@ const ScheduleSection: React.FC<{ schedule: EventSchedule[] }> = ({ schedule }) 
           <p>時間: {event.time}</p>
           <p>地點: {event.location}</p>
         </div>
-        <Link to="/SeatSelection" className="schedule-button">
+        <Link to={`/SeatSelection/${event.id}`} className="schedule-button">
           Get
         </Link>
       </div>
@@ -231,10 +234,11 @@ const MainPage: React.FC = () => {
     // 取得活動資料替代 EXAMPLE_SCHEDULE
     const fetchActivities = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/activities');
+        const response = await fetch(`${apiUrl}/activities`);
         if (response.ok) {
           const data = await response.json();
           const formattedSchedule = data.map((activity: any) => ({
+            id: activity.activity_id,
             name: `${activity.artist} - ${activity.activity_name}`,
             image: `${activity.artist}.jpg`,
             time: activity.activity_date,
