@@ -195,7 +195,6 @@ const ScheduleSection: React.FC<{ schedule: EventSchedule[] }> = ({ schedule }) 
         key={event.name} 
         style={{ 
           display: 'flex', 
-          alignItems: 'center', 
           border: '1px solid #ccc', 
           borderRadius: '8px', 
           padding: '10px', 
@@ -203,24 +202,68 @@ const ScheduleSection: React.FC<{ schedule: EventSchedule[] }> = ({ schedule }) 
           width: '98%',
         }}
       >
-        <img 
-          src={event.image} 
-          alt={event.name} 
-          style={{ width: '300px', height: '100px', objectFit: 'cover', marginRight: '10px' }} 
-        />
-        <div style={{ width: '1px', backgroundColor: '#ccc', height: '100px', marginRight: '10px' }}></div>
-        <div style={{ flexGrow: 1, marginRight: '10px' }}>
-          <p><strong>{event.name}</strong></p>
-          <p>時間: {event.time}</p>
-          <p>地點: {event.location}</p>
+        {/* 左邊放圖片 */}
+        <div style={{ marginRight: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <img 
+            src={event.image} 
+            alt={event.name} 
+            style={{ width: '300px', height: '100px', objectFit: 'cover' }} 
+          />
         </div>
-        <Link to={`/SeatSelection/${event.id}`} className="schedule-button">
-          Get
-        </Link>
+
+        {/* 分隔線 */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '1px', backgroundColor: '#ccc', height: '150px', marginRight: '10px' }}></div>
+        </div>
+
+        {/* 右邊內容 */}
+        <div style={{ flexGrow: 1 }}>
+          {/* 右邊上層 */}
+          <div style={{ marginBottom: '10px' }}>
+            <p><strong>{event.name}</strong></p>
+          </div>
+          
+          {/* 右邊下層 */}
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* 右下層左邊 */}
+            <div>
+              <p>時間: {event.time}</p>
+              <p>地點: {event.location}</p>
+            </div>
+            {/* 右下層右邊 */}
+            <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', flexGrow: 1 }}>
+              <Link to={`/SeatSelection/${event.id}`} className="schedule-button">
+                Get
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     ))}
   </div>
 );
+
+// CSS for the button
+const styles = `
+.schedule-button {
+  width: 50%;
+  padding: 15px;
+  margin-top: 70px;
+  border: none;
+  border-radius: 50px;
+  background-color: #977bb3;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s; /* 增加按鈕變化的過渡效果 */
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+}
+`;
+
+// Append styles to the head
+document.head.insertAdjacentHTML('beforeend', `<style>${styles}</style>`);
 
 // 主頁面模組
 const MainPage: React.FC = () => {
