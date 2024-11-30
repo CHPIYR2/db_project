@@ -12,27 +12,29 @@ interface EventSchedule {
   image: string;
   time: string;
   location: string;
-  seats: string;
 }
 
 // example data
 const CAROUSEL_IMAGES = [
-  'Maroon5.jpg',
   'YOASOBI.jpg',
   'MAYDAY 五月天.jpg',
-  '世界12強棒球賽.jpg'
+  '世界12強棒球賽.jpg',
+  '怕胖團.jpg',
+  '蘇打綠.jpg',
 ];
 
 const EXAMPLE_SINGERS: Singer[] = [
-  { name: 'IVE', image: 'IVE.jpg' },
-  { name: 'NewJeans', image: 'NewJeans.jpg' },
-  { name: 'TRUSTY', image: 'TRUSTY.jpg' }
+  { name: '怕胖團', image: '怕胖團-直.jpg' },
+  { name: '世界12強棒球賽', image: '世界12強棒球賽-直.jpg' },
+  { name: '周杰倫', image: '周杰倫-直.jpg' }
 ];
 
 const EXAMPLE_SCHEDULE: EventSchedule[] = [
-  { name: 'IVE', image: 'IVE.jpg', time: '11/24 Pm08:00', location: '台北小巨蛋', seats: '017' },
-  { name: 'NewJeans', image: 'NewJeans.jpg', time: '12/10 Pm07:00', location: '高雄巨蛋', seats: '020' },
-  { name: 'TRUSTY', image: 'TRUSTY.jpg', time: '01/15 Pm08:30', location: '台中體育館', seats: '050' }
+  { name: '世界12強棒球賽', image: '世界12強棒球賽.jpg', time: '11/24 Pm08:00', location: '台北大巨蛋' },
+  { name: '怕胖團', image: '怕胖團.jpg', time: '12/10 Pm07:00', location: '高雄巨蛋' },
+  { name: 'MAYDAY 五月天', image: 'MAYDAY 五月天.jpg', time: '01/15 Pm08:30', location: '台中體育館' },
+  { name: '蘇打綠', image: '蘇打綠.jpg', time: '01/15 Pm08:30', location: '台中體育館' },
+  { name: 'YOASOBI', image: 'YOASOBI.jpg', time: '01/15 Pm08:30', location: '台中體育館' }
 ];
 
 // 圖片輪播模組
@@ -164,7 +166,6 @@ const ScheduleSection: React.FC<{ schedule: EventSchedule[] }> = ({ schedule }) 
           <p><strong>{event.name}</strong></p>
           <p>時間: {event.time}</p>
           <p>地點: {event.location}</p>
-          <p>尚有座位: {event.seats}</p>
         </div>
         <Link to="/SeatSelection" className="schedule-button">
           Get
