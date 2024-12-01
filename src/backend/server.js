@@ -136,6 +136,31 @@ app.get('/api/tickets/:user_id', async (req, res) => {
   }
 });
 
+// 查詢包含特定字串的活動 API
+app.get('/api/activities/search', async (req, res) => {
+  const searchString = req.query.q;
+
+  if (!searchString) {
+    return res.status(400).json({ message: '請提供搜尋字串' });
+  }
+
+  try {
+    const result = await sql.query`
+      SELECT * FROM activity
+      WHERE artist LIKE '%' + ${searchString} + '%' OR activity_name LIKE '%' + ${searchString} + '%'
+    `;
+    
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: '找不到符合條件的活動' });
+    }
+
+    return res.status(200).json(result.recordset);
+  } catch (err) {
+    console.error('伺服器錯誤:', err);
+    res.status(500).json({ message: '伺服器錯誤' });
+  }
+});
+
 // 獲取所有票券的 API
 app.get('/api/tickets', async (req, res) => {
   try {
