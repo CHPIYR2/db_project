@@ -141,9 +141,9 @@ const SeatSelection = () => {
         successMessage.style.borderRadius = '5px';
         document.body.appendChild(successMessage);
 
-        // 跳轉至首頁
+        // 跳轉至訂單頁面
         setTimeout(() => {
-          window.location.href = '/';
+          window.location.href = '/order';
         }, 1000);
       } else {
         console.error('新增票券失敗');
