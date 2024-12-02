@@ -39,12 +39,14 @@ const SeatSelection = () => {
     if (selectedActivity) {
       fetchAreas();
     }
-  }, [selectedActivity, activities]);
+    if (selectedArea) {
+      fetchOccupiedSeats();
+    }
+  }, [selectedActivity, activities, selectedArea]);
 
   useEffect(() => {
-    // 當選擇的區域改變時更新行數和列數
     if (selectedArea) {
-      const area = areas.find((a) => a.area_id === parseInt(selectedArea));
+      const area = areas.find(a => a.area === selectedArea);
       if (area) {
         const updatedRows = parseInt(area.area_row);
         const updatedColumns = parseInt(area.area_column);
@@ -54,6 +56,29 @@ const SeatSelection = () => {
       }
     }
   }, [selectedArea]);
+
+  async function fetchOccupiedSeats() {
+    try {
+      const response = await fetch(`${apiUrl}/tickets/activity/${selectedActivity}/area/${selectedArea}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSeats((prevSeats) => {
+          return prevSeats.map(row =>
+            row.map(seat => {
+              const seatString = `${selectedArea}-${seat.row}-${seat.column}`;
+              const isOccupied = data.some(ticket => ticket.seat === seatString);
+              return isOccupied ? { ...seat, occupied: true } : seat;
+            })
+          );
+        });
+      } else {
+        console.error('Failed to fetch occupied seats');
+      }
+    } catch (error) {
+      console.error('Error fetching occupied seats:', error);
+    }
+  }
+  
 
   const fetchActivities = async () => {
     try {
@@ -106,7 +131,7 @@ const SeatSelection = () => {
     setSeats((prevSeats) => {
       const updatedSeats = prevSeats.map((row, i) =>
         row.map((seat, j) => {
-          if (i === rowIdx && j === colIdx) {
+          if (i === rowIdx && j === colIdx && !seat.occupied) {
             return { ...seat, selected: !seat.selected };
           }
           return seat;
@@ -115,6 +140,7 @@ const SeatSelection = () => {
       return updatedSeats;
     });
   };
+  
 
   const postTicketData = async (seatData: { activity_id: number; seat: string; user_id: string | null }) => {
     try {
@@ -156,7 +182,7 @@ const SeatSelection = () => {
   const handleSubmitOrder = async () => {
     const userId = localStorage.getItem('authToken');
     const selectedSeats = seats.flat().filter(seat => seat.selected);
-    const selectedAreaObject = areas.find(area => area.area_id === parseInt(selectedArea));
+    const selectedAreaObject = areas.find(area => area.area === selectedArea);
     selectedSeats.forEach(async seat => {
       const seatData = {
         activity_id: parseInt(selectedActivity),
@@ -167,6 +193,7 @@ const SeatSelection = () => {
       await postTicketData(seatData);
     });
   };
+  
 
   return (
     <div className="container">
@@ -196,7 +223,7 @@ const SeatSelection = () => {
         >
           <option value="" disabled>請選擇區域</option>
           {areas.map(area => (
-            <option key={area.area_id} value={area.area_id}>
+            <option key={area.area_id} value={area.area}>
               {`${area.place} - ${area.area} 區`}
             </option>
           ))}
