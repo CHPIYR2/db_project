@@ -161,6 +161,29 @@ app.get('/api/activities/search', async (req, res) => {
   }
 });
 
+// 查詢特定活動和特定區域的座位 API
+app.get('/api/tickets/activity/:activity_id/area/:area', async (req, res) => {
+  const activityId = req.params.activity_id;
+  const area = req.params.area;
+
+  try {
+    const result = await sql.query`
+      SELECT ticket_id, seat, user_id
+      FROM ticket
+      WHERE activity_id = ${activityId} AND seat LIKE ${area + '-%'}
+    `;
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: '找不到符合條件的票券' });
+    }
+
+    return res.status(200).json(result.recordset);
+  } catch (err) {
+    console.error('伺服器錯誤:', err);
+    res.status(500).json({ message: '伺服器錯誤' });
+  }
+});
+
 // 獲取所有票券的 API
 app.get('/api/tickets', async (req, res) => {
   try {

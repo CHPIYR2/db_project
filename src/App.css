@@ -307,9 +307,30 @@
   background-color: #fff;
 }
 .seat.occupied {
-  background-color: #6c757d;
+  background-color: #ff0000c9;
   color: #fff;
   cursor: not-allowed;
+  position: relative;
+}
+
+.seat.occupied::after {
+  content: '已售出';
+  position: absolute;
+  top: 110%;  /* 將提示顯示在格子下方 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff0000;
+  color: #fff;
+  padding: 2px 5px;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.seat.occupied:hover::after {
+  opacity: 1;
 }
 .seat.selected {
   background-color: #28a745;
