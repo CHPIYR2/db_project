@@ -21,17 +21,19 @@ interface EventSchedule {
 const CAROUSEL_IMAGES = [
   'YOASOBI.jpg',
   'MAYDAY 五月天.jpg',
-  '世界12強棒球賽.jpg',
+  '2026 WBC 世界棒球經典賽資格賽.jpg',
+  '2024 aespa LIVE TOUR.jpg',
   '周杰倫.jpg',
   '怕胖團.jpg',
   '蘇打綠.jpg',
 ];
 
 const EXAMPLE_SINGERS: Singer[] = [
-  { name: '怕胖團', image: '怕胖團-直.jpg' },
-  { name: '世界12強棒球賽', image: '世界12強棒球賽-直.jpg' },
   { name: '周杰倫', image: '周杰倫-直.jpg' },
-  { name: 'MAYDAY 五月天', image: 'MAYDAY 五月天-直.jpg' },
+  { name: '張惠妹', image: '張惠妹-直.jpg' },
+  { name: '2026 WBC 世界棒球經典賽資格賽', image: '2026 WBC 世界棒球經典賽資格賽-直.jpg' },
+  { name: '2024 aespa LIVE TOUR', image: '2024 aespa LIVE TOUR-直.jpg' },
+  { name: '怕胖團', image: '怕胖團-直.jpg' },
 ];
 
 // 圖片輪播模組
@@ -151,7 +153,7 @@ const ActivitySection: React.FC<{ singers: Singer[] }> = ({ singers }) => {
             <img 
               src={singer.image} 
               alt={singer.name} 
-              style={{ width: '300px', height: '400px', objectFit: 'cover' }}
+              style={{ width: '300px', height: '438px', objectFit: 'cover' }}
             />
             <h3>{singer.name}</h3>
           </div>
