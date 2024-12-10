@@ -12,13 +12,13 @@ interface OrderList {
 }
 
 function Order() {
-  const [orderList, setOrderList] = useState<OrderList[]>([]); // { ticket_id: 2, activity: '世界12強棒球賽 - B組預賽 韓國vs中華', activity_date: '2024-12-07', place: '高雄巨蛋', seat: 'E-10-3' }
+  const [orderList, setOrderList] = useState<OrderList[]>([]);
 
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const userId = localStorage.getItem('authToken');
-        const response = await fetch(`${apiUrl}/tickets/${userId}`); // 假設使用者 ID 為 1，您可以根據實際需要動態替換
+        const response = await fetch(`${apiUrl}/tickets/${userId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -31,6 +31,14 @@ function Order() {
 
     fetchTickets();
   }, []);
+
+  const formatSeat = (seat: string) => {
+    const parts = seat.split('-');
+    if (parts.length === 3) {
+      return `${parts[0]} 區-${parts[1]} 排-${parts[2]} 號`;
+    }
+    return seat; // 若格式不符合預期，則直接返回原始值
+  };
 
   return (
     <div style={{ height: '100%', width: '100%', margin: '0 auto', padding: '0' }}>
@@ -62,7 +70,7 @@ function Order() {
                 <p>訂單編號: {event.ticket_id.toString().padStart(4, '0')}</p>
                 <p>時間: {event.activity_date}</p>
                 <p>地點: {event.place}</p>
-                <p>座位: {event.seat}</p>
+                <p>座位: {formatSeat(event.seat)}</p>
               </div>
             </div>
           ))
